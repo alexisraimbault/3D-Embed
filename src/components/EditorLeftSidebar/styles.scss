@@ -1,0 +1,39 @@
+@import "@utils/colors.scss";
+
+.left-sidebar {
+    &__wrapper {
+        height: 100vh;
+        background-color: white;
+        height: 100vh;
+        overflow-y: scroll;
+        padding: 16px 20px 32px 20px;
+    }
+
+    &__inner {
+        margin-top: 12px;
+    }
+
+    &__shapes {
+        &--hidden {
+            height: 0;
+            overflow: hidden;
+        }
+    }
+
+    &__shape {
+        cursor: pointer;
+        width: 150px;
+        height: 150px;
+        border-radius: 20px;
+        border: solid 1px white;
+        margin-bottom: 12px;
+
+        &:hover {
+            background-color: $bluePrimary;
+        }
+
+        &--selected {
+            border-color: $bluePrimary;
+        }
+    }
+}

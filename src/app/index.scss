@@ -1,0 +1,87 @@
+@import "@utils/colors.scss";
+@import 'primeicons/primeicons.css';
+// @import "primereact/resources/primereact.min.css";
+@import "primereact/resources/themes/saga-blue/theme.css";
+
+@font-face {
+    font-family: "visby_regular";
+    src: url("../assets/fonts/visby-webfont/VisbyRegular.woff");
+    font-size: 18;
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "visby_heavy";
+    src: url("../assets/fonts/visby-webfont/VisbyHeavy.woff");
+    font-weight: 400;
+}
+
+* {
+    // box-sizing: content-box;
+    padding: 0;
+    margin: 0;
+    font-family: "visby_regular", sans-serif;
+    font-style: normal;
+}
+
+html,
+body {
+    max-width: 100vw;
+    overflow-x: hidden;
+    background-color: $bgColor;
+}
+
+.p-colorpicker-panel {
+    cursor: pointer;
+}
+
+.p-colorpicker-color-selector {
+    border-radius: 9px;
+    overflow: hidden;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.p-slider-handle {
+    top: -8px;
+}
+
+// .p-tabmenuitem {
+//     padding: 1.25rem;
+// }
+
+.p-menuitem-link {
+    padding: 0 1.25rem;
+}
+
+.p-menuitem-text {
+    margin-left: 0.5rem;
+}
+
+.p-tabmenu {
+    height: 40px;
+    padding-bottom: 0;
+}
+
+.p-tabmenu-nav {
+    height: 100%;
+}
+
+.p-button {
+    color: #ffffff;
+    background: #06b6d4;
+    border: 1px solid #06b6d4;
+    padding: 0.75rem 1.25rem;
+    font-size: 1rem;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+    border-radius: 6px;
+
+    &:hover {
+        background: #0891b2;
+        color: #ffffff;
+        border-color: #0891b2;
+    }
+
+    span {
+        margin-right: 8px;
+    }
+}

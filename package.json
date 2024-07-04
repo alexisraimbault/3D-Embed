@@ -1,0 +1,37 @@
+{
+  "name": "3d-embed",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@kobbleio/next": "^1.6.0",
+    "@react-three/drei": "^9.108.1",
+    "@react-three/fiber": "^8.16.8",
+    "@react-three/postprocessing": "^2.16.2",
+    "@types/three": "^0.166.0",
+    "firebase": "^10.12.2",
+    "next": "14.2.4",
+    "primeicons": "^7.0.0",
+    "primereact": "^10.7.0",
+    "react": "^18",
+    "react-best-gradient-color-picker": "^3.0.8",
+    "react-colorful": "^5.6.1",
+    "react-dom": "^18",
+    "sass": "^1.77.6",
+    "three": "^0.165.0",
+    "util": "^0.12.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.4",
+    "typescript": "^5"
+  }
+}
