@@ -1,68 +1,72 @@
 import { Canvas } from "@react-three/fiber";
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
+import { OrbitControls } from '@react-three/drei'
 
 import { shapeSettingsType } from "@utils/types";
 import { hexToRgb } from "@utils/methods";
 import { defaultSettingsByShape } from "@utils/statics";
 
 interface PlanetPropsTypes {
-    interaction?: string,
-    shapeSettings?: shapeSettingsType
+  interaction?: string,
+  shapeSettings?: shapeSettingsType,
+  isSidebar?: boolean,
 };
 
 export const Planet = ({
-    interaction = 'timer',
-    shapeSettings = { ...defaultSettingsByShape.planet },
+  interaction = 'timer',
+  shapeSettings = { ...defaultSettingsByShape.planet },
+  isSidebar = false
 }: PlanetPropsTypes) => {
 
-    return (
-        <Canvas camera={{ position: [0.0, 0.0, 3.0] }}>
-            <Blob
-                interaction={interaction}
-                shapeSettings={shapeSettings}
-            />
-        </Canvas>
-    );
+  return (
+    <Canvas camera={{ position: [0.0, 0.0, 3.0] }}>
+      <Blob
+        interaction={interaction}
+        shapeSettings={shapeSettings}
+      />
+      {!isSidebar && <OrbitControls />}
+    </Canvas>
+  );
 }
 
 const Blob = ({
-    interaction,
-    shapeSettings
+  interaction,
+  shapeSettings
 }: {
-    interaction: string,
-    shapeSettings: shapeSettingsType
+  interaction: string,
+  shapeSettings: shapeSettingsType
 }) => {
-    const meshRef = useRef<any>(null);
+  const meshRef = useRef<any>(null);
 
-    const settings = {
-        // speed: shapeSettings.metrics[0],
-        speed: shapeSettings.metrics[0],
-        density: shapeSettings.metrics[1],
-        strength: shapeSettings.metrics[2],
-        frequency: shapeSettings.metrics[3],
-        amplitude: shapeSettings.metrics[4],
-        intensity: shapeSettings.metrics[5],
-    };
+  const settings = {
+    // speed: shapeSettings.metrics[0],
+    speed: shapeSettings.metrics[0],
+    density: shapeSettings.metrics[1],
+    strength: shapeSettings.metrics[2],
+    frequency: shapeSettings.metrics[3],
+    amplitude: shapeSettings.metrics[4],
+    intensity: shapeSettings.metrics[5],
+  };
 
-    useFrame((state, delta) => {
-        const { clock } = state;
-        if (meshRef && meshRef.current) {
-            if (interaction === 'scroll') {
-                const { scrollY } = window;
-                meshRef.current.rotation.y = scrollY / 500
-            }
-            if (interaction === 'timer') {
-                meshRef.current.rotation.y += delta / 5
-            }
-            meshRef.current.material.uniforms.uTime.value =
-                0.4 * clock.getElapsedTime();
-        }
-    });
+  useFrame((state, delta) => {
+    const { clock } = state;
+    if (meshRef && meshRef.current) {
+      if (interaction === 'scroll') {
+        const { scrollY } = window;
+        meshRef.current.rotation.y = scrollY / 500
+      }
+      if (interaction === 'timer') {
+        meshRef.current.rotation.y += delta / 5
+      }
+      meshRef.current.material.uniforms.uTime.value =
+        0.4 * clock.getElapsedTime();
+    }
+  });
 
-    const baseColor = hexToRgb(shapeSettings.colors[0])
+  const baseColor = hexToRgb(shapeSettings.colors[0])
 
-    const noise = `
+  const noise = `
 // GLSL textureless classic 3D noise "cnoise",
 // with an RSL-style periodic variant "pnoise".
 // Author:  Stefan Gustavson (stefan.gustavson@liu.se)
@@ -171,7 +175,7 @@ float pnoise(vec3 P, vec3 rep)
 }
 `;
 
-    const rotation = `
+  const rotation = `
 mat3 rotation3dY(float angle) {
   float s = sin(angle);
   float c = cos(angle);
@@ -188,7 +192,7 @@ vec3 rotateY(vec3 v, float angle) {
 }  
 `;
 
-    const vertexShader = `  
+  const vertexShader = `  
 varying vec2 vUv;
 varying float vDistort;
 
@@ -219,7 +223,7 @@ void main() {
 }  
 `;
 
-    const fragmentShader = `
+  const fragmentShader = `
 varying vec2 vUv;
 varying float vDistort;
 
@@ -245,26 +249,26 @@ void main() {
 }  
 `;
 
-    return (
-        <mesh
-            ref={meshRef}
-            scale={1.5}
-            position={[0, 0, 0]}
-        >
-            <icosahedronGeometry args={[1, 64]} />
-            <shaderMaterial
-                vertexShader={vertexShader}
-                fragmentShader={fragmentShader}
-                uniforms={{
-                    uTime: { value: 0 },
-                    uSpeed: { value: settings.speed },
-                    uNoiseDensity: { value: settings.density },
-                    uNoiseStrength: { value: settings.strength },
-                    uFrequency: { value: settings.frequency },
-                    uAmplitude: { value: settings.amplitude },
-                    uIntensity: { value: settings.intensity },
-                }}
-            />
-        </mesh>
-    )
+  return (
+    <mesh
+      ref={meshRef}
+      scale={1.5}
+      position={[0, 0, 0]}
+    >
+      <icosahedronGeometry args={[1, 64]} />
+      <shaderMaterial
+        vertexShader={vertexShader}
+        fragmentShader={fragmentShader}
+        uniforms={{
+          uTime: { value: 0 },
+          uSpeed: { value: settings.speed },
+          uNoiseDensity: { value: settings.density },
+          uNoiseStrength: { value: settings.strength },
+          uFrequency: { value: settings.frequency },
+          uAmplitude: { value: settings.amplitude },
+          uIntensity: { value: settings.intensity },
+        }}
+      />
+    </mesh>
+  )
 }

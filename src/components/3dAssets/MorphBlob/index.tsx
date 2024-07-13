@@ -2,6 +2,7 @@ import { Canvas } from "@react-three/fiber";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { MathUtils } from "three";
+import { OrbitControls } from '@react-three/drei'
 
 import { shapeSettingsType } from "@utils/types";
 import { hexToRgb } from "@utils/methods";
@@ -9,12 +10,14 @@ import { defaultSettingsByShape } from '@utils/statics';
 
 interface MorphBlobPropsTypes {
     interaction?: string,
-    shapeSettings?: shapeSettingsType
+    shapeSettings?: shapeSettingsType,
+    isSidebar?: boolean,
 };
 
 export const MorphBlob = ({
     interaction = 'timer',
     shapeSettings = { ...defaultSettingsByShape.morph },
+    isSidebar = false
 }: MorphBlobPropsTypes) => {
     // TODO add intensity customisation
 
@@ -26,6 +29,7 @@ export const MorphBlob = ({
                 interaction={interaction}
                 shapeSettings={shapeSettings}
             />
+            {!isSidebar && <OrbitControls />}
         </Canvas>
     );
 }

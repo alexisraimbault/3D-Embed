@@ -1,12 +1,17 @@
 import './styles.scss'
 
 import { PopoverPicker } from '../kit/ColorPicker';
-import { Slider } from 'primereact/slider';
+// import { Slider } from 'primereact/slider';
+// import { Slider } from "@nextui-org/slider";
+// import { Slider } from "@nextui-org/slider";
+// import { Checkbox } from 'primereact/checkbox';
+import { Slider } from '@mui/base/Slider';
 import { Nullable } from "primereact/ts-helpers";
 import { Button } from 'primereact/button';
 
 import { projectType, shapeSettingsType } from '@utils/types';
 import { settingsParamsByShape } from '@utils/statics';
+import { ImageCrop } from '../kit/ImageCrop';
 
 type EditorRightSidebarPropsTypes = {
     onUpdateShapeSettings: (s: shapeSettingsType) => void,
@@ -33,12 +38,18 @@ const EditorRightSidebar = ({
         if (Array.isArray(newMetric)) {
             return;
         }
-        if (!newMetric) {
+        if (!newMetric && newMetric !== 0) {
             return
         }
 
         const newProjectData = { ...projectData }
         newProjectData.shapeSettings.metrics[index] = newMetric
+        onUpdateShapeSettings(newProjectData.shapeSettings)
+    }
+
+    const updateImage = (index: number) => (newImage: string) => {
+        const newProjectData = { ...projectData }
+        newProjectData.shapeSettings.images[index] = newImage
         onUpdateShapeSettings(newProjectData.shapeSettings)
     }
 
@@ -54,24 +65,59 @@ const EditorRightSidebar = ({
         )
     }
 
-    const renderMetrcSettings = (index: number, defaultValue: number, minValue: number, maxValue: number, step: number) => {
+    const renderMetrcSettings = (index: number, defaultValue: number, minValue: number, maxValue: number, step: number, label: string) => {
         const value = projectData.shapeSettings.metrics[index] || defaultValue
 
+        // const isCheckbox = minValue === 0 && maxValue === 1 && step === 1
         return (
             <div className='right-sidebar__slider-wrapper'>
+                {/* {!isCheckbox && ( */}
                 <Slider
+                    value={value}
+                    step={step}
+                    max={maxValue}
+                    min={minValue}
+                    onChange={(_e, value) => updateMetric(index)(value)}
+                    className='right-sidebar__slider'
+                // defaultValue={0.4}
+                />
+                {/* )} */}
+                {/* {isCheckbox && (
+                    <Checkbox
+                        onChange={e => {
+                            console.log(e.checked ? 1 : 0)
+                            updateMetric(index)(e.checked ? 1.0 : 0.0)
+                        }}
+                        checked={value === 1}
+                    >
+                    </Checkbox>
+                )} */}
+                {/* <Slider
                     value={value}
                     onChange={(e) => updateMetric(index)(e.value)}
                     min={minValue}
                     max={maxValue}
                     step={step}
                     className='right-sidebar__slider'
-                />
+                /> */}
                 <div className='right-sidebar__slider-value'>
                     {value}
                 </div>
             </div>
         )
+    }
+
+    const renderImageSettings = (index: number, defaultImage: string) => {
+
+        return (
+            <div className='right-sidebar__image-input-wrapper'>
+                <ImageCrop
+                    imageName={projectData.shapeSettings.images[index] || defaultImage}
+                    setImageName={updateImage(index)}
+                />
+            </div>
+        )
+
     }
 
     const availableSettingsTypes = Object.keys(settingsParamsByShape)
@@ -92,12 +138,16 @@ const EditorRightSidebar = ({
             }) => {
                 const isColor = type === 'color'
                 const isMetric = type === 'metric'
+                const isImage = type === 'image'
                 return (
                     <div
                         className='right-sidebar__setting-wrapper'
-                        key={`s-${isColor ?
-                            'c' :
-                            isMetric ? 'm' : '?'}-${index}`}
+                        key={
+                            `s-${isColor ? 'c' :
+                                isMetric ? 'm' :
+                                    isImage ? 'i' : '?'
+                            }-${index}`
+                        }
                     >
                         {label && label.length > 0 && (
                             <div className='right-sidebar__setting-label'>
@@ -110,8 +160,10 @@ const EditorRightSidebar = ({
                             typeof defaultValue === 'number' ? defaultValue : 0,
                             min || 0,
                             max || 20,
-                            step || 1
+                            step || 1,
+                            label || 'Metric'
                         )}
+                        {isImage && renderImageSettings(index, defaultValue.toString())}
                     </div>
                 )
             })}

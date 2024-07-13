@@ -1,0 +1,18 @@
+.image-crop {
+    &__wrapper {
+        max-width: 250px;
+
+        .reactEasyCrop_Container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+    }
+
+    &__hidden {
+        display: none;
+    }
+
+    &__image-container {
+        cursor: pointer;
+    }
+}

@@ -1,8 +1,13 @@
 import './styles.scss'
 
 import { useState } from "react";
-import { TabMenu } from 'primereact/tabmenu';
-import ColorPicker from 'react-best-gradient-color-picker'
+// import { TabMenu } from 'primereact/tabmenu';
+import { Tabs } from '@mui/base/Tabs';
+import { TabsList } from '@mui/base/TabsList';
+import { TabPanel } from '@mui/base/TabPanel';
+import { Tab } from '@mui/base/Tab';
+// import ColorPicker from 'react-best-gradient-color-picker'
+import ReactGPicker from 'react-gcolor-picker';
 
 import {
     MorphBlob,
@@ -10,6 +15,9 @@ import {
     PerlinBlob,
     Planet
 } from "@components"
+import { BallPit } from '../3dAssets/Ballpit';
+import { XMasBallpit } from '../3dAssets/XMasBallpit';
+import { ImageParticles } from '../3dAssets/ImageParticles';
 
 type EditorLeftSidebarPropsTypes = {
     onUpdateShape: (shape: string) => void,
@@ -36,46 +44,85 @@ const EditorLeftSidebar = ({
         }
     ]
 
+    const renderImage = (imagePath: string, imageAlt: string = "") => {
+        return (
+            <img
+                className='left-sidebar__feature-img'
+                src={imagePath}
+                height={150}
+                width={150}
+                alt="imageAlt"
+            />
+        )
+    }
+
     const ThreeDAssets = [
         {
-            id: 'morph',
-            render: (
-                <MorphBlob />
-            )
+            id: 'imageParticles',
+            // render: (
+            //     <ImageParticles isSidebar />
+            // )
+            render: renderImage('/assets/features_screenshots/screen_1.png')
         },
         {
-            id: 'network',
-            render: (
-                <Network />
-            )
+            id: 'ballpit',
+            // render: (
+            //     <BallPit isSidebar />
+            // )
+            render: renderImage('/assets/features_screenshots/screen_2.png')
+        },
+        {
+            id: 'xmasBallpit',
+            // render: (
+            //     <XMasBallpit isSidebar />
+            // )
+            render: renderImage('/assets/features_screenshots/screen_3.png')
         },
         {
             id: 'perlin',
-            render: (
-                <PerlinBlob />
-            )
+            // render: (
+            //     <PerlinBlob isSidebar />
+            // )
+            render: renderImage('/assets/features_screenshots/screen_4.png')
+        },
+        {
+            id: 'network',
+            // render: (
+            //     <Network isSidebar />
+            // )
+            render: renderImage('/assets/features_screenshots/screen_5.png')
         },
         {
             id: 'planet',
-            render: (
-                <Planet />
-            )
+            // render: (
+            //     <Planet isSidebar />
+            // )
+            render: renderImage('/assets/features_screenshots/screen_6.png')
+        },
+        {
+            id: 'morph',
+            // render: (
+            //     <MorphBlob isSidebar />
+            // )
+            render: renderImage('/assets/features_screenshots/screen_7.png')
         },
     ]
 
     return (
         <div className="left-sidebar__wrapper">
-            <div className="left-sidebar__tabs__wrapper">
-                <TabMenu model={tabElements} activeIndex={selectedTab} onTabChange={(e) => setSelectedTab(e.index)} />
-                {/* {tabs.map(({ id: tabId, element: tabElement }) => (
-                    <div
-                        className={`left-sidebar__tabs__tab${selectedTab === tabId ? ' left-sidebar__tabs__tab--selected' : ''}`}
-                        key={`t-${tabId}`}
-                        onClick={() => setSelectedTab(tabId)}
-                    >
-                        {tabElement}
-                    </div>
-                ))} */}
+            <div className="left-sidebar__tabs-wrapper">
+                {tabElements.map((item, index) => {
+                    return (
+                        <div
+                            className={`left-sidebar__tab-title${selectedTab === index ? " left-sidebar__tab-title--selected" : ""}`}
+                            key={`t-${index}`}
+                            onClick={() => setSelectedTab(index)}
+                        >
+                            <span className={`${item.icon} left-sidebar__tab-icon`} />
+                            {item.label}
+                        </div>
+                    )
+                })}
             </div>
             <div className="left-sidebar__inner">
                 <div className={`left-sidebar__shapes${selectedTab !== 0 ? ' left-sidebar__shapes--hidden' : ''}`}>
@@ -90,12 +137,13 @@ const EditorLeftSidebar = ({
                     ))}
                 </div>
                 {selectedTab === 1 && (
-                    <>
-                        <ColorPicker value={backgroundColor} onChange={setBackgroundColor} />
-                    </>
+                    <ReactGPicker
+                        value={backgroundColor}
+                        onChange={setBackgroundColor}
+                        gradient
+                    />
                 )}
             </div>
-
         </div>
     );
 }

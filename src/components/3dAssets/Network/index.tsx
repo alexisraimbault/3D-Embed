@@ -1,18 +1,21 @@
 import { useRef, useMemo, useEffect } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { AdditiveBlending, Vector3 } from 'three'
+import { OrbitControls } from '@react-three/drei'
 
 import { shapeSettingsType } from '@utils/types'
 import { defaultSettingsByShape } from '@utils/statics';
 
 interface NetworkPropsTypes {
     interaction?: string,
-    shapeSettings?: shapeSettingsType
+    shapeSettings?: shapeSettingsType,
+    isSidebar?: boolean,
 };
 
 export const Network = ({
     interaction = 'timer',
     shapeSettings = { ...defaultSettingsByShape.network },
+    isSidebar = false
 }: NetworkPropsTypes) => {
 
     return (
@@ -23,6 +26,7 @@ export const Network = ({
                 interaction={interaction}
                 shapeSettings={shapeSettings}
             />
+            {!isSidebar && <OrbitControls />}
         </Canvas>
     );
 }

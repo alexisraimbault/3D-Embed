@@ -2,6 +2,8 @@
 import './styles.scss'
 
 import { ReactNode, useEffect, useState } from 'react';
+import { useAuth } from '@kobbleio/next/client'
+import { ref, push, set, get } from "firebase/database";
 
 import {
     EditorLeftSidebar,
@@ -14,30 +16,65 @@ import {
 
 import { projectType, shapeSettingsType } from '@utils/types';
 import { defaultSettingsByShape } from '@utils/statics';
+import { cloneDeep } from '@utils/methods';
+import { database } from '@utils/firebase';
+import { BallPit } from '../../components/3dAssets/Ballpit';
+import { XMasBallpit } from '../../components/3dAssets/XMasBallpit';
+import { ImageParticles } from '../../components/3dAssets/ImageParticles';
 
 type EditorPropsTypes = {};
 
 const Editor = ({ }: EditorPropsTypes) => {
-    const defaultSettings = JSON.parse(JSON.stringify(defaultSettingsByShape))
-    console.log({ morphSettings: defaultSettings.morph })
+    const { user } = useAuth();
+
+    const defaultSettings = cloneDeep(defaultSettingsByShape)
     const [projectData, setProjectData] = useState<projectType>({
         shape: null,
         shapeSettings: {
             colors: [],
-            metrics: []
-        },
-        background: {
-            type: 'none',
-            color1: null,
-            color2: null,
+            metrics: [],
+            images: []
         },
     })
     const [shouldReload, setShouldReload] = useState(false)
     const [backgroundColor, setBackgroundColor] = useState('linear-gradient(45deg,   rgba(139,255,227,1) 0%, RGB(252, 138, 240) 100%)');
+    const [embedId, setEmbedId] = useState<string | null>(null)
 
     useEffect(() => {
         setShouldReload(true)
     }, [projectData, backgroundColor])
+
+    useEffect(() => {
+        onSaveEmbed()
+    }, [projectData, backgroundColor, user])
+
+    const onSaveEmbed = () => {
+        if (!user) {
+            return
+        }
+
+        const userId = user.id
+        const isFirstSave = !embedId
+
+        const embedData = {
+            shapeSettings: projectData,
+            backgroundColor,
+        }
+
+        if (isFirstSave) {
+            const embedsListRef = ref(database, `embed/list`)
+            const newEmbedRef = push(embedsListRef, embedData);
+            const newEmbedId = newEmbedRef.key
+            const userEmbedsPointerRef = ref(database, `embed/users/${userId}/embeds/${newEmbedId}`)
+            set(userEmbedsPointerRef, {
+                created_at: Date.now()
+            })
+            setEmbedId(newEmbedId)
+        } else {
+            const embedRef = ref(database, `embed/list/${embedId}`)
+            set(embedRef, embedData)
+        }
+    }
 
     useEffect(() => {
         if (shouldReload) {
@@ -54,8 +91,13 @@ const Editor = ({ }: EditorPropsTypes) => {
             return
         }
 
-        console.log({ settings: defaultSettings[shape] })
+        const shapeSettings = { ...defaultSettings[shape] }
         newProjectData.shapeSettings = { ...defaultSettings[shape] }
+        newProjectData.shapeSettings = {
+            colors: shapeSettings.colors,
+            metrics: shapeSettings.metrics,
+            images: [...projectData.shapeSettings.images],
+        }
         setProjectData(newProjectData)
     }
 
@@ -66,6 +108,12 @@ const Editor = ({ }: EditorPropsTypes) => {
         const shapesWithDefaultValues = Object.keys(defaultSettings)
         if (shapesWithDefaultValues.includes(shape)) {
             newProjectData.shapeSettings = { ...defaultSettings[shape] }
+        }
+
+        const isImageParticles = shape === 'imageParticles'
+
+        if (isImageParticles) {
+            setBackgroundColor('rgb(0, 0, 0)')
         }
 
         setProjectData(newProjectData)
@@ -100,6 +148,21 @@ const Editor = ({ }: EditorPropsTypes) => {
                 shapeSettings={projectData.shapeSettings}
             />
         ),
+        ballpit: (
+            <BallPit
+                shapeSettings={projectData.shapeSettings}
+            />
+        ),
+        xmasBallpit: (
+            <XMasBallpit
+                shapeSettings={projectData.shapeSettings}
+            />
+        ),
+        imageParticles: (
+            <ImageParticles
+                shapeSettings={projectData.shapeSettings}
+            />
+        )
     }
     const availableShapes = Object.keys(shapeMap)
 

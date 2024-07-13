@@ -4,18 +4,21 @@ import { useFrame } from "@react-three/fiber";
 import {
     Color,
 } from "three";
+import { OrbitControls } from '@react-three/drei'
 
 import { shapeSettingsType } from "@utils/types";
 import { defaultSettingsByShape } from "@utils/statics";
 
 interface PerlinBlobPropsTypes {
     interaction?: string,
-    shapeSettings?: shapeSettingsType
+    shapeSettings?: shapeSettingsType,
+    isSidebar?: boolean,
 };
 
 export const PerlinBlob = ({
     interaction = 'timer',
     shapeSettings = { ...defaultSettingsByShape.perlin },
+    isSidebar = false
 }: PerlinBlobPropsTypes) => {
 
     return (
@@ -25,11 +28,11 @@ export const PerlinBlob = ({
                 shapeSettings={shapeSettings}
             />
             <directionalLight
-                // position={[5, 3, 1]}
-                // color='#ffffff'
-                color={`#${shapeSettings.colors[0]}`}
+                position={[5, 3, 1]}
+                color='#ffffff'
+                // color={`#${shapeSettings.colors[1]}`}
                 // intensity={0.25}
-                intensity={1}
+                intensity={3}
             />
             {/* <hemisphereLight
                 // color={'#FC1EFF'}
@@ -44,11 +47,12 @@ export const PerlinBlob = ({
             /> */}
             <ambientLight
                 // color='#FC1EFF'
-                color={`#${shapeSettings.colors[1]}`}
-                // color={`#FFFFFF`}
-                intensity={0.5}
+                // color={`#${shapeSettings.colors[1]}`}
+                color={`#FFFFFF`}
+                intensity={0.01}
             // intensity={1}
             />
+            {!isSidebar && <OrbitControls />}
         </Canvas>
     );
 }
@@ -205,8 +209,9 @@ const Blob = ({
             <meshPhongMaterial
                 color={`#${shapeSettings.colors[0]}`}
                 emissive={new Color(`#${shapeSettings.colors[0]}`).multiplyScalar(0.001)}
+                // specular={new Color(`#${shapeSettings.colors[1]}`).multiplyScalar(0.001)}
                 shininess={10000}
-                // reflectivity={100}
+                // reflectivity={10000}
                 onBeforeCompile={(shader) => {
                     shader.uniforms.time = gu.time;
                     shader.vertexShader = `

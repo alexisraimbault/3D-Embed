@@ -15,6 +15,7 @@ const defaultSettingsByShape: {
             6.0,
             7.0,
         ],
+        images: [],
     },
     morph: {
         colors: [
@@ -22,6 +23,7 @@ const defaultSettingsByShape: {
             '0055ff',
         ],
         metrics: [],
+        images: [],
     },
     network: {
         colors: [
@@ -29,13 +31,46 @@ const defaultSettingsByShape: {
             '000000',
         ],
         metrics: [],
+        images: [],
     },
     perlin: {
         colors: [
             'ff167f',
-            '808080',
         ],
         metrics: [],
+        images: [],
+    },
+    ballpit: {
+        colors: [
+            '4400ff',
+            'ff0000',
+        ],
+        metrics: [],
+        images: [],
+    },
+    xmasBallpit: {
+        colors: [
+            'c0a0a0',
+            'ff0000',
+            '8a492f'
+        ],
+        metrics: [],
+        images: [],
+    },
+    imageParticles: {
+        colors: [
+            'ffffff',
+            'ffffff',
+        ],
+        metrics: [
+            5.0,
+            5.0,
+            0.0,
+            0.0,
+            0.0,
+            5.0,
+        ],
+        images: ['cly4dq15i00uhyiopjiztmgq7_1720795027328'],
     }
 }
 
@@ -82,12 +117,6 @@ const settingsParamsByShape: {
             index: 0,
             label: 'Blob Color',
             defaultValue: 'ff167f'
-        },
-        {
-            type: 'color',
-            index: 1,
-            label: 'Shadow Color',
-            defaultValue: 'ffffff'
         },
     ],
     planet: [
@@ -150,6 +179,114 @@ const settingsParamsByShape: {
             max: 40,
             step: 1,
             label: 'Intensity',
+        },
+    ],
+    ballpit: [
+        {
+            type: 'color',
+            index: 0,
+            label: 'Balls',
+            defaultValue: '4400ff'
+        },
+        {
+            type: 'color',
+            index: 1,
+            label: 'Light',
+            defaultValue: 'ff0000'
+        },
+    ],
+    xmasBallpit: [
+        {
+            type: 'color',
+            index: 0,
+            label: 'Bubbles',
+            defaultValue: 'c0a0a0'
+        },
+        {
+            type: 'color',
+            index: 1,
+            label: 'Light',
+            defaultValue: 'ff0000'
+        },
+        {
+            type: 'color',
+            index: 2,
+            label: 'Cap',
+            defaultValue: '8a492f'
+        },
+    ],
+    imageParticles: [
+        {
+            type: 'image',
+            index: 0,
+            label: 'Image',
+            defaultValue: ''
+        },
+        {
+            type: 'color',
+            index: 0,
+            label: 'From',
+            defaultValue: 'ffffff'
+        },
+        {
+            type: 'color',
+            index: 1,
+            label: 'To',
+            defaultValue: 'ffffff'
+        },
+        {
+            type: 'metric',
+            index: 0,
+            label: 'Cursor Size',
+            defaultValue: 5.0,
+            min: 1,
+            max: 10,
+            step: 0.1,
+        },
+        {
+            type: 'metric',
+            index: 1,
+            label: 'Particle Size',
+            defaultValue: 5.0,
+            min: 1,
+            max: 20,
+            step: 0.1,
+        },
+        {
+            type: 'metric',
+            index: 2,
+            label: 'Grayscale Boost',
+            defaultValue: 0.0,
+            min: -1,
+            max: 1,
+            step: 0.001,
+        },
+        {
+            type: 'metric',
+            index: 3,
+            label: 'Grayscale Inverter',
+            defaultValue: 0.0,
+            min: 0,
+            max: 1,
+            step: 1,
+        },
+        {
+            type: 'metric',
+            index: 4,
+            label: 'Visibility Threshold',
+            defaultValue: 0.0,
+            min: 0,
+            max: 1,
+            step: 0.001,
+        },
+        {
+            type: 'metric',
+            index: 5,
+            label: 'Displacement Intensity',
+            defaultValue: 5.0,
+            min: 0,
+            max: 40,
+            step: 1,
         },
     ]
 }
