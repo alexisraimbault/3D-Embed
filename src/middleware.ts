@@ -1,7 +1,7 @@
 import { authMiddleware } from '@kobbleio/next/server'
 
 export default authMiddleware({
-    publicRoutes: ['/'],
+    publicRoutes: ['/', '/view', '/view/', '/view/*'],
 });
 
 export const config = {
