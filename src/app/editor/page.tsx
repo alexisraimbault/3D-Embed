@@ -44,10 +44,6 @@ const Editor = ({ }: EditorPropsTypes) => {
         setShouldReload(true)
     }, [projectData, backgroundColor])
 
-    useEffect(() => {
-        onSaveEmbed()
-    }, [projectData, backgroundColor, user])
-
     const onSaveEmbed = () => {
         if (!user) {
             return
@@ -75,6 +71,10 @@ const Editor = ({ }: EditorPropsTypes) => {
             set(embedRef, embedData)
         }
     }
+
+    useEffect(() => {
+        onSaveEmbed()
+    }, [projectData, backgroundColor, user, onSaveEmbed])
 
     useEffect(() => {
         if (shouldReload) {
@@ -166,6 +166,8 @@ const Editor = ({ }: EditorPropsTypes) => {
     }
     const availableShapes = Object.keys(shapeMap)
 
+    const shareUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/view/${embedId}`
+
     return (
         <div className="editor__wrapper">
             <EditorLeftSidebar
@@ -176,15 +178,20 @@ const Editor = ({ }: EditorPropsTypes) => {
             />
             <div
                 className='editor__preview__wrapper'
-                style={{
-                    background: backgroundColor,
-                }}
             >
-                {projectData.shape && availableShapes.includes(projectData.shape) && !shouldReload && (
-                    <>
-                        {shapeMap[projectData.shape]}
-                    </>
-                )}
+                <div>{shareUrl}</div>
+                <div
+                    className='editor__preview__inner'
+                    style={{
+                        background: backgroundColor,
+                    }}
+                >
+                    {projectData.shape && availableShapes.includes(projectData.shape) && !shouldReload && (
+                        <>
+                            {shapeMap[projectData.shape]}
+                        </>
+                    )}
+                </div>
             </div>
             <EditorRightSidebar
                 onUpdateShapeSettings={onUpdateShapeSettings}

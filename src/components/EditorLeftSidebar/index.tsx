@@ -1,23 +1,8 @@
 import './styles.scss'
 
 import { useState } from "react";
-// import { TabMenu } from 'primereact/tabmenu';
-import { Tabs } from '@mui/base/Tabs';
-import { TabsList } from '@mui/base/TabsList';
-import { TabPanel } from '@mui/base/TabPanel';
-import { Tab } from '@mui/base/Tab';
-// import ColorPicker from 'react-best-gradient-color-picker'
 import ReactGPicker from 'react-gcolor-picker';
-
-import {
-    MorphBlob,
-    Network,
-    PerlinBlob,
-    Planet
-} from "@components"
-import { BallPit } from '../3dAssets/Ballpit';
-import { XMasBallpit } from '../3dAssets/XMasBallpit';
-import { ImageParticles } from '../3dAssets/ImageParticles';
+import Image from 'next/image'
 
 type EditorLeftSidebarPropsTypes = {
     onUpdateShape: (shape: string) => void,
@@ -46,7 +31,7 @@ const EditorLeftSidebar = ({
 
     const renderImage = (imagePath: string, imageAlt: string = "") => {
         return (
-            <img
+            <Image
                 className='left-sidebar__feature-img'
                 src={imagePath}
                 height={150}

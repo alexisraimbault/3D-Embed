@@ -1,0 +1,6 @@
+.view-page {
+    &__wrapper {
+        width: min(100vh, 100vw);
+        height: min(100vh, 100vw);
+    }
+}

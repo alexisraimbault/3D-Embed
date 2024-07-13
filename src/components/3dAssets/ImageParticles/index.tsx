@@ -213,6 +213,7 @@ const ImageDisplay = ({
     // displacement.canvas.height = 128
     // displacement.canvas.style.position = "fixed"
     // displacement.canvas.style.top = '0'
+    // displacement.canvas.style.left = '200px'
     // displacement.canvas.style.width = "256px"
     // displacement.canvas.style.height = "256px"
     // displacement.canvas.style.zIndex = "10"

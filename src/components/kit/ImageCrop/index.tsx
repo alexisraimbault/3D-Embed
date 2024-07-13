@@ -5,6 +5,7 @@ import EasyCropper, { Area } from 'react-easy-crop';
 import { useAuth } from '@kobbleio/next/client';
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { Button } from 'primereact/button';
+import Image from 'next/image'
 
 import { getCroppedImg, readFile } from '@utils/methods';
 import { storage } from '@utils/firebase';
@@ -21,17 +22,17 @@ export const ImageCrop = ({ imageName, setImageName }: {
 
     const [firebaseImageUrl, setFirebaseImageUrl] = useState('')
 
-    useEffect(() => {
-        if (imageName && imageName.length > 0) {
-            fetchImage()
-        }
-    }, [imageName])
-
     const fetchImage = async () => {
         const imagePath = `uploads/${imageName}`
         const imageUrlRes = await getDownloadURL(ref(storage, imagePath));
         setFirebaseImageUrl(imageUrlRes)
     }
+
+    useEffect(() => {
+        if (imageName && imageName.length > 0) {
+            fetchImage()
+        }
+    }, [imageName, fetchImage])
 
     const onCropComplete = (_croppedArea: Area, croppedAreaPixels: Area) => {
         setCroppedAreaPixels(croppedAreaPixels)
