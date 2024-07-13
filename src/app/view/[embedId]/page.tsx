@@ -107,15 +107,19 @@ const ViewPage = ({ }: ViewPropsTypes) => {
     return (
         <div
             className="view-page__wrapper"
-            style={{
-                background: backgroundColor,
-            }}
         >
-            {projectData.shape && availableShapes.includes(projectData.shape) && (
-                <>
-                    {shapeMap[projectData.shape]}
-                </>
-            )}
+            <div
+                className="view-page__container"
+                style={{
+                    background: backgroundColor,
+                }}
+            >
+                {projectData.shape && availableShapes.includes(projectData.shape) && (
+                    <>
+                        {shapeMap[projectData.shape]}
+                    </>
+                )}
+            </div>
         </div>
     );
 }

@@ -1,5 +1,13 @@
 .view-page {
     &__wrapper {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__container {
         width: min(100vh, 100vw);
         height: min(100vh, 100vw);
     }
