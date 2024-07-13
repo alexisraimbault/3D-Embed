@@ -4,6 +4,8 @@ import './styles.scss'
 import { ReactNode, useEffect, useState } from 'react';
 import { useAuth } from '@kobbleio/next/client'
 import { ref, push, set, get } from "firebase/database";
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { Button } from 'primereact/button';
 
 import {
     EditorLeftSidebar,
@@ -168,6 +170,16 @@ const Editor = ({ }: EditorPropsTypes) => {
 
     const shareUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/view/${embedId}`
 
+    const embedCode = `
+    <iframe 
+        src="${shareUrl}" 
+        title="Embed 3D render"
+        width="500px"
+        height="500px"
+    >
+    </iframe>
+`
+
     return (
         <div className="editor__wrapper">
             <EditorLeftSidebar
@@ -179,7 +191,26 @@ const Editor = ({ }: EditorPropsTypes) => {
             <div
                 className='editor__preview__wrapper'
             >
-                <div>{shareUrl}</div>
+                <div
+                    className='editor__preview__links-wrapper'
+                >
+                    <CopyToClipboard
+                        text={shareUrl}
+                    >
+                        <Button
+                            label="Copy Link"
+                            icon="pi pi-link"
+                        />
+                    </CopyToClipboard>
+                    <CopyToClipboard
+                        text={embedCode}
+                    >
+                        <Button
+                            label="Copy Embed Code"
+                            icon="pi pi-code"
+                        />
+                    </CopyToClipboard>
+                </div>
                 <div
                     className='editor__preview__inner'
                     style={{

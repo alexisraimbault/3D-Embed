@@ -22,5 +22,12 @@
             // flex-grow: 1;
             overflow: hidden;
         }
+
+        &__links-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
     }
 }
