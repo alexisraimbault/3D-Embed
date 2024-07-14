@@ -1,4 +1,4 @@
-'use client'
+"use client"
 import './styles.scss'
 
 import {
@@ -17,18 +17,25 @@ export default function Home() {
   const { user } = useAuth();
   const [showMouseTrail, setShowMouseTrail] = useState(false)
 
-  const windowHeight = window.innerHeight
-  addEventListener("scroll", (event) => {
-    const isSCrolledDown = window.scrollY > windowHeight * 0.4
-    if (isSCrolledDown && !showMouseTrail) {
-      setShowMouseTrail(true)
-    }
-    if (!isSCrolledDown && showMouseTrail) {
-      setShowMouseTrail(false)
-    }
-  });
+  if (typeof addEventListener !== "undefined") {
+    addEventListener("scroll", (event) => {
+      if (typeof window !== "undefined") {
+        const windowHeight = window.innerHeight
+        const isSCrolledDown = window.scrollY > windowHeight * 0.4
+        if (isSCrolledDown && !showMouseTrail) {
+          setShowMouseTrail(true)
+        }
+        if (!isSCrolledDown && showMouseTrail) {
+          setShowMouseTrail(false)
+        }
+      }
+    });
+  }
 
   const getIsMobile = () => {
+    if (typeof window === "undefined") {
+      return false
+    }
     return ((window.innerWidth <= 961));
   }
 
