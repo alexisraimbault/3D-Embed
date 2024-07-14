@@ -1,0 +1,204 @@
+.homepage {
+    &__wrapper {
+        color: white;
+        background-color: black;
+        min-height: 200vh;
+    }
+
+    &__ballpit {
+        width: 60vh;
+        height: 60vh;
+    }
+
+    &__ballpit-wrapper {
+        padding-top: 20vh;
+        padding-left: calc(90vw - 60vh);
+        animation: fadeInAnimation ease 1s;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+    }
+
+    &__header-wrapper {
+        position: fixed;
+        z-index: 999;
+        backdrop-filter: blur(12px);
+        top: 0;
+        left: 0;
+        padding: 20px 10vw;
+        width: 100vw;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__header-title {
+        font-size: 3rem;
+        font-weight: bold;
+    }
+
+    &__hero-title {
+        font-size: 4rem;
+        margin-bottom: 24px;
+    }
+
+    &__hero-subtitle {
+        font-size: 2rem;
+    }
+
+    &__hero-left {
+        z-index: 999;
+        position: fixed;
+        top: 25vh;
+        left: 10vw;
+        max-width: 40vw;
+    }
+
+    &__hero-cta,
+    &__header-cta {
+        font-size: 2rem;
+        padding: 20px 40px;
+        margin-top: 32px;
+        // width: 220px;
+        // height: 50px;
+        border: none;
+        outline: none;
+        color: #fff;
+        background: #111;
+        cursor: pointer;
+        position: relative;
+        z-index: 0;
+        border-radius: 999px;
+    }
+
+    &__header-cta {
+        margin-top: 0;
+        font-size: 1rem;
+        padding: 12px 24px;
+    }
+
+    &__hero-cta:before,
+    &__header-cta:before {
+        content: '';
+        background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        background-size: 400%;
+        z-index: -1;
+        filter: blur(5px);
+        width: calc(100% + 4px);
+        height: calc(100% + 4px);
+        animation: glowing 20s linear infinite;
+        opacity: 0;
+        transition: opacity .3s ease-in-out;
+        border-radius: 999px;
+    }
+
+    &__hero-cta:active,
+    &__header-cta:active {
+        color: #000
+    }
+
+    &__hero-cta:active:after,
+    &__header-cta:active:after {
+        background: transparent;
+    }
+
+    &__hero-cta:hover:before,
+    &__header-cta:hover:before {
+        opacity: 1;
+    }
+
+    &__hero-cta:after,
+    &__header-cta:after {
+        z-index: -1;
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #111;
+        left: 0;
+        top: 0;
+        border-radius: 999px;
+    }
+
+    @keyframes glowing {
+        0% {
+            background-position: 0 0;
+        }
+
+        50% {
+            background-position: 400% 0;
+        }
+
+        100% {
+            background-position: 0 0;
+        }
+    }
+
+    @keyframes fadeInAnimation {
+        0% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+}
+
+// Mobile rules 
+@media (max-width:961px) {
+    .homepage {
+
+        &__ballpit {
+            width: 90vw;
+            height: 90vw;
+        }
+
+        &__ballpit-wrapper {
+            margin: 0 5vw 20px 5vw;
+            padding: 0;
+        }
+
+        &__header-wrapper {
+            padding: 20px 5vw;
+        }
+
+        &__hero-left {
+            z-index: 2;
+            position: relative;
+            padding: 150px 5vw;
+            top: 0;
+            left: 0;
+            max-width: 100vw;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        &__header-title {
+            font-size: 1rem;
+        }
+
+        &__hero-title {
+            font-size: 2.3rem;
+        }
+
+        &__hero-subtitle {
+            font-size: 1rem;
+        }
+
+        &__hero-cta,
+        &__header-cta {
+            font-size: 1rem;
+            z-index: 20;
+        }
+
+        &__header-cta {
+            font-size: 1rem;
+        }
+    }
+}

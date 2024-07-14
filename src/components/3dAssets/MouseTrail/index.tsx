@@ -1,4 +1,8 @@
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import './styles.scss';
+
+import {
+    Canvas, useFrame, useThree
+} from "@react-three/fiber";
 import { Physics, usePlane, useSphere } from "@react-three/cannon"
 import { EffectComposer, SSAO, Bloom } from "@react-three/postprocessing"
 import { AdditiveBlending, BufferAttribute, BufferGeometry, Color, CustomBlending, InstancedMesh, NormalBlending, ShaderMaterial } from "three";
@@ -20,7 +24,8 @@ export const MouseTrail = ({
 
     return (
         <div
-            style={{ position: 'absolute', top: 0, width: "100vw", height: "100vh" }}
+            className='mousetrail__wrapper'
+            style={{ position: 'fixed', top: 0, width: "100vw", height: "100vh" }}
         >
             <Canvas
                 camera={{ position: [0, 0, 20], fov: 50, near: 17, far: 40 }}
