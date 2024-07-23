@@ -22,6 +22,31 @@
         // animation-fill-mode: forwards;
     }
 
+    &__hero-v2 {
+        position: absolute;
+        top: 10vh;
+        padding: 0 5vw;
+        width: 100vw;
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        z-index: 999;
+    }
+
+    &__hero-cta-v2 {
+        position: absolute;
+        bottom: 20vh;
+        z-index: 999;
+        width: 100vw;
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
     &__hero-left {
         position: fixed;
         top: 25vh;

@@ -13,6 +13,8 @@ import { MouseTrail } from '../components/3dAssets/MouseTrail';
 import { BallPit } from '../components/3dAssets/Ballpit';
 import { ImageParticles } from '../components/3dAssets/ImageParticles';
 import { useState } from 'react';
+import { TextParticles } from '../components/3dAssets/TextParticles';
+import { XMasBallpit } from '../components/3dAssets/XMasBallpit';
 
 export default function Home() {
   const { user } = useAuth();
@@ -73,7 +75,32 @@ export default function Home() {
     });
   }
 
-  return (
+  return true ? (
+    <div
+      className='homepage__wrapper'
+    >
+      <div
+        className='homepage__hero-v2'
+      >
+        <div className='homepage__hero-title'>
+          {"Create Outstanding 3D Web Experiences"}
+        </div>
+        <div className='homepage__hero-subtitle'>
+          {"Simple, Interactive, and Customizable. Captivate attention and make yourself unforgettable "}
+        </div>
+
+      </div>
+      <div className='homepage__hero-cta-v2'>
+        <button
+          className='homepage__hero-cta'
+          onClick={onStartCreating}
+        >
+          {"START CREATING"}
+        </button>
+      </div>
+      <TextParticles />
+    </div>
+  ) : (
     <div className='homepage__wrapper'>
       <div
         className='homepage__container'
