@@ -19,7 +19,6 @@ export default function Home() {
   const [showBallpit, setShowBallpit] = useState(true)
   const [showMouseTrail, setShowMouseTrail] = useState(false)
   const [showImageParticles, setShowImageParticles] = useState(false)
-  const [scrollY, setScrollY] = useState(0)
   const [isScrolling, setIsScrolling] = useState(false)
 
   const { push } = useRouter()
@@ -27,6 +26,15 @@ export default function Home() {
     push('/editor')
   }
   let timer: null | NodeJS.Timeout = null
+
+  const getIsMobile = () => {
+    if (typeof window === "undefined") {
+      return false
+    }
+    return ((window.innerWidth <= 961));
+  }
+
+  const isMobile = getIsMobile()
 
   if (typeof addEventListener !== "undefined") {
     addEventListener("scroll", (event) => {
@@ -38,11 +46,10 @@ export default function Home() {
         setIsScrolling(false)
       }, 10);
 
-      if (typeof window !== "undefined") {
+      if (typeof window !== "undefined" && !isMobile) {
         const windowHeight = window.innerHeight
         const isSCrolledDown1 = window.scrollY > windowHeight * 0.4
         const isSCrolledDown2 = window.scrollY > windowHeight * 0.8
-        setScrollY(window.scrollY)
 
         const shouldShowBallPit = !isSCrolledDown1
         const shouldShowMouseTrail = isSCrolledDown1 && !isSCrolledDown2
@@ -66,18 +73,12 @@ export default function Home() {
     });
   }
 
-  const getIsMobile = () => {
-    if (typeof window === "undefined") {
-      return false
-    }
-    return ((window.innerWidth <= 961));
-  }
-
-  const isMobile = getIsMobile()
-
   return (
     <div className='homepage__wrapper'>
-      <div className='homepage__container'>
+      <div
+        className='homepage__container'
+        style={isMobile ? {} : { minHeight: '200vh' }}
+      >
         <div className='homepage__header-wrapper'>
           <div className='homepage__header-title'>{"3D EMBED"}</div>
           <button
@@ -92,7 +93,7 @@ export default function Home() {
             <div className='homepage__hero-title'>
               {"Create Outstanding 3D Web Experiences"}
             </div>
-            {isMobile && !isScrolling && (
+            {isMobile && (
               <div
                 className='homepage__ballpit-wrapper'
               >
@@ -114,7 +115,7 @@ export default function Home() {
             >
               {"START CREATING"}
             </button>
-            {isMobile && (
+            {isMobile && !isScrolling && (
               <div
                 className='homepage__ballpit-wrapper'
               >
@@ -169,7 +170,7 @@ export default function Home() {
       </SignedOut> */}
       </div >
       {showMouseTrail && !isScrolling && !isMobile && <MouseTrail />}
-      {isMobile && !isScrolling && <MouseTrail />}
+      {/* {isMobile && !isScrolling && <MouseTrail />} */}
     </div>
   )
 }
