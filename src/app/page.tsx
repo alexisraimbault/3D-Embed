@@ -77,7 +77,7 @@ export default function Home() {
     <div className='homepage__wrapper'>
       <div
         className='homepage__container'
-        style={isMobile ? {} : { minHeight: '200vh' }}
+        style={isMobile ? { minHeight: '170vh' } : { minHeight: '200vh' }}
       >
         <div className='homepage__header-wrapper'>
           <div className='homepage__header-title'>{"3D EMBED"}</div>
