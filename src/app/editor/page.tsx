@@ -27,7 +27,7 @@ import { ImageParticles } from '../../components/3dAssets/ImageParticles';
 type EditorPropsTypes = {};
 
 const Editor = ({ }: EditorPropsTypes) => {
-    const { user } = useAuth();
+    // const { user } = useAuth();
 
     const defaultSettings = cloneDeep(defaultSettingsByShape)
     const [projectData, setProjectData] = useState<projectType>({
@@ -47,11 +47,11 @@ const Editor = ({ }: EditorPropsTypes) => {
     }, [projectData, backgroundColor])
 
     const onSaveEmbed = () => {
-        if (!user) {
-            return
-        }
+        // if (!user) {
+        //     return
+        // }
 
-        const userId = user.id
+        // const userId = user.id
         const isFirstSave = !embedId
 
         const embedData = {
@@ -63,10 +63,10 @@ const Editor = ({ }: EditorPropsTypes) => {
             const embedsListRef = ref(database, `embed/list`)
             const newEmbedRef = push(embedsListRef, embedData);
             const newEmbedId = newEmbedRef.key
-            const userEmbedsPointerRef = ref(database, `embed/users/${userId}/embeds/${newEmbedId}`)
-            set(userEmbedsPointerRef, {
-                created_at: Date.now()
-            })
+            // const userEmbedsPointerRef = ref(database, `embed/users/${userId}/embeds/${newEmbedId}`)
+            // set(userEmbedsPointerRef, {
+            //     created_at: Date.now()
+            // })
             setEmbedId(newEmbedId)
         } else {
             const embedRef = ref(database, `embed/list/${embedId}`)
@@ -76,7 +76,12 @@ const Editor = ({ }: EditorPropsTypes) => {
 
     useEffect(() => {
         onSaveEmbed()
-    }, [projectData, backgroundColor, user, onSaveEmbed])
+    }, [
+        projectData,
+        backgroundColor,
+        //  user,
+        onSaveEmbed
+    ])
 
     useEffect(() => {
         if (shouldReload) {

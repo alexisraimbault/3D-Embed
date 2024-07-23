@@ -1,7 +1,7 @@
 import { authMiddleware } from '@kobbleio/next/server'
 
 export default authMiddleware({
-    publicRoutes: ['/', '/view\/(.*)'],
+    publicRoutes: ['/', '/view\/(.*)', '/editor'],
 });
 
 export const config = {
@@ -9,6 +9,6 @@ export const config = {
         // exclude internal Next.js routes
         "/((?!.+\\.[\\w]+$|_next).*)",
         // reinclude api routes
-        "/(api|trpc)(.*)"
+        "/(api|trpc)(.*)",
     ]
 };

@@ -25,7 +25,6 @@ export const MouseTrail = ({
     return (
         <div
             className='mousetrail__wrapper'
-            style={{ position: 'fixed', top: 0, width: "100vw", height: "100vh" }}
         >
             <Canvas
                 camera={{ position: [0, 0, 20], fov: 50, near: 17, far: 40 }}
@@ -112,9 +111,33 @@ const Particles = () => {
         particleScaleArray[i] = Math.random()
     }
 
+    const mouseCoordinates = useRef({ x: 0, y: 0 })
+
+    if (typeof addEventListener !== "undefined" && typeof window !== undefined) {
+        addEventListener("mousemove", (event) => {
+            mouseCoordinates.current = {
+                x: (event.clientX / window.innerWidth) * 2 - 1,
+                y: (event.clientY / window.innerHeight) * 2 - 1,
+            }
+            console.log('new', mouseCoordinates.current.x, mouseCoordinates.current.y)
+        })
+    }
+
     useFrame(({ mouse, viewport, clock }, delta) => {
         const elapsedTime = clock.getElapsedTime()
-        const mouseCoordinates = { x: (mouse.x * viewport.width) / 2, y: (mouse.y * viewport.height) / 2, z: -0.1 }
+        const mouseCoordinatesOld = { x: (mouse.x * viewport.width) / 2, y: (mouse.y * viewport.height) / 2, z: -0.1 }
+        const mouseCoordinatesToUse = {
+            x: (mouseCoordinates.current.x * viewport.width) / 2,
+            y: (mouseCoordinates.current.y * viewport.height) / 2 * -1,
+        }
+        console.log('old', mouse.x, mouse.y)
+        // const windowEvent = window.event;
+
+        // if(windowEvent) {
+        //     var posX = windowEvent.clientX;
+        //     var posY = windowEvent.clientY;
+
+        // }
 
         // Aging particles
         if (
@@ -143,8 +166,8 @@ const Particles = () => {
 
                     // bufferAttributePositionRef.current.array[i3] = mouseCoordinates.x + r * Math.cos(randomizedAngle) * randomizedLength
                     // bufferAttributePositionRef.current.array[i3 + 1] = mouseCoordinates.y + Math.sin(randomizedAngle) * randomizedLength
-                    bufferAttributePositionRef.current.array[i3] = mouseCoordinates.x + varyingX
-                    bufferAttributePositionRef.current.array[i3 + 1] = mouseCoordinates.y + varyingY
+                    bufferAttributePositionRef.current.array[i3] = mouseCoordinatesToUse.x + varyingX
+                    bufferAttributePositionRef.current.array[i3 + 1] = mouseCoordinatesToUse.y + varyingY
                     bufferAttributePositionRef.current.array[i3 + 2] = -0.1 + varyingZ;
 
                     bufferAttributeDeltaRef.current.array[i] = elapsedTime
