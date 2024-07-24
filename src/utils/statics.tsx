@@ -28,7 +28,7 @@ const defaultSettingsByShape: {
     network: {
         colors: [
             '00a822',
-            '000000',
+            'ffffff',
         ],
         metrics: [],
         images: [],
@@ -70,7 +70,7 @@ const defaultSettingsByShape: {
             0.0,
             5.0,
         ],
-        images: ['cly4dq15i00uhyiopjiztmgq7_1720795027328'],
+        images: ['cly4dq15i00uhyiopjiztmgq7_1721820981855'],
     }
 }
 
@@ -108,7 +108,7 @@ const settingsParamsByShape: {
             type: 'color',
             index: 1,
             label: 'Links',
-            defaultValue: '000000'
+            defaultValue: 'ffffff'
         },
     ],
     perlin: [

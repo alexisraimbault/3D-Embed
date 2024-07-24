@@ -47,7 +47,8 @@ const EditorLeftSidebar = ({
             // render: (
             //     <ImageParticles isSidebar />
             // )
-            render: renderImage('/assets/features_screenshots/screen_1.png')
+            // render: renderImage('/assets/features_screenshots/screen_1.png')
+            render: renderImage('/assets/features_screenshots/screen_1-removebg-preview.png')
         },
         {
             id: 'ballpit',

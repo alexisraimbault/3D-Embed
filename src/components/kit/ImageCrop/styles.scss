@@ -15,4 +15,9 @@
     &__image-container {
         cursor: pointer;
     }
+
+    &__image-preview {
+        border-radius: 20px;
+        overflow: hidden;
+    }
 }

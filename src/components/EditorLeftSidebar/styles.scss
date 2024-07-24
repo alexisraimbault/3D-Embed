@@ -3,7 +3,8 @@
 .left-sidebar {
     &__wrapper {
         height: 100vh;
-        background-color: white;
+        background-color: $darkColor1;
+        color: $lightColor1;
         height: 100vh;
         overflow-y: scroll;
         padding: 16px 20px 32px 20px;
@@ -30,7 +31,7 @@
         }
 
         &--selected {
-            border-bottom: solid 4px $bluePrimary;
+            border-bottom: solid 4px $redColor1;
         }
     }
 
@@ -47,6 +48,7 @@
     &__shapes {
         display: flex;
         justify-content: center;
+        gap: 8px;
         flex-wrap: wrap;
 
         &--hidden {
@@ -60,16 +62,16 @@
         width: 150px;
         height: 150px;
         border-radius: 20px;
-        border: solid 1px white;
-        margin-bottom: 12px;
+        border: solid 1px $lightColor1;
+        // margin-bottom: 12px;
         overflow: hidden;
 
         &:hover {
-            background-color: $bluePrimary;
+            background-color: $redColor1;
         }
 
         &--selected {
-            border-color: $bluePrimary;
+            border-color: $redColor1;
         }
     }
 }

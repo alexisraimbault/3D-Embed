@@ -31,15 +31,19 @@ const Editor = ({ }: EditorPropsTypes) => {
 
     const defaultSettings = cloneDeep(defaultSettingsByShape)
     const [projectData, setProjectData] = useState<projectType>({
-        shape: null,
-        shapeSettings: {
-            colors: [],
-            metrics: [],
-            images: []
-        },
+        // shape: null,
+        // shapeSettings: {
+        //     colors: [],
+        //     metrics: [],
+        //     images: []
+        // },
+        shape: 'imageParticles',
+        shapeSettings: defaultSettingsByShape.imageParticles,
     })
     const [shouldReload, setShouldReload] = useState(false)
-    const [backgroundColor, setBackgroundColor] = useState('linear-gradient(45deg,   rgba(139,255,227,1) 0%, RGB(252, 138, 240) 100%)');
+
+    // const [backgroundColor, setBackgroundColor] = useState('linear-gradient(45deg,   rgba(139,255,227,1) 0%, RGB(252, 138, 240) 100%)');
+    const [backgroundColor, setBackgroundColor] = useState('rgb(0, 0, 0)');
     const [embedId, setEmbedId] = useState<string | null>(null)
 
     useEffect(() => {

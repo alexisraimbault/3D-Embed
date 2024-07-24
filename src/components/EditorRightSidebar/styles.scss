@@ -3,7 +3,8 @@
 .right-sidebar {
     &__wrapper {
         height: 100vh;
-        background-color: white;
+        color: $lightColor1;
+        background-color: $darkColor1;
         height: 100vh;
         overflow-y: scroll;
         padding: 16px 20px 32px 20px;
