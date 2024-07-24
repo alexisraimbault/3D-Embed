@@ -8,7 +8,7 @@
 // import { Text } from "@react-three/drei";
 
 import * as THREE from "three";
-import React, { RefObject, forwardRef, useRef } from "react";
+import React, { RefObject, forwardRef, useEffect, useRef, useState } from "react";
 import { render } from "react-dom";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { EffectComposer, GodRays } from "@react-three/postprocessing";
@@ -63,7 +63,7 @@ const isMobile = getIsMobile()
 const CustomText = () => {
 
     const [matcapTexture] = useMatcapTexture('7B5254_E9DCC7_B19986_C8AC91', 256)
-    console.log(matcapTexture)
+
     return (
         <Text3D
             font="/assets/fonts/helvetiker_regular.typeface.json"
@@ -96,7 +96,11 @@ const CustomText = () => {
 }
 
 const Effects = () => {
+    const [shouldRerender, setShouldRerender] = useState(false)
     const sunRef = useRef(null)
+    useEffect(() => {
+        setShouldRerender(true)
+    }, [sunRef.current])
 
     return (
         <>
@@ -133,7 +137,6 @@ const Sun = ({ sunRef }: { sunRef: RefObject<any> }) => {
                 x: (event.clientX / window.innerWidth) * 2 - 1,
                 y: (event.clientY / window.innerHeight) * 2 - 1,
             }
-            console.log('new', mouseCoordinates.current.x, mouseCoordinates.current.y)
         })
     }
 
