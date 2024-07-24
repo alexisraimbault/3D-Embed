@@ -44,18 +44,16 @@ export const TextParticles = ({
                     <CustomText />
                 </Center>
                 <Effects />
-                {!isMobile && (
-                    <OrbitControls
-                        minPolarAngle={Math.PI / 2}
-                        maxPolarAngle={Math.PI / 2}
-                        minAzimuthAngle={-Math.PI / 3}
-                        maxAzimuthAngle={Math.PI / 3}
-                        // minPolarAngle={Math.PI / 4}
-                        // maxPolarAngle={-Math.PI / 4}
-                        enableZoom={false}
-                        enablePan={false}
-                    />
-                )}
+                <OrbitControls
+                    minPolarAngle={Math.PI / 2}
+                    maxPolarAngle={Math.PI / 2}
+                    minAzimuthAngle={-Math.PI / 3}
+                    maxAzimuthAngle={Math.PI / 3}
+                    // minPolarAngle={Math.PI / 4}
+                    // maxPolarAngle={-Math.PI / 4}
+                    enableZoom={false}
+                    enablePan={false}
+                />
                 {/* <OrbitControls /> */}
             </Canvas>
         </div>
