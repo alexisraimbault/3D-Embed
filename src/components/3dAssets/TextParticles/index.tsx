@@ -18,6 +18,15 @@ import { Center, OrbitControls, useMatcapTexture, Text3D, Text } from "@react-th
 interface TextParticlesPropsTypes {
 };
 
+const getIsMobile = () => {
+    if (typeof window === "undefined") {
+        return false
+    }
+    return ((window.innerWidth <= 961));
+}
+
+const isMobile = getIsMobile()
+
 export const TextParticles = ({
 }: TextParticlesPropsTypes) => {
 
@@ -35,30 +44,23 @@ export const TextParticles = ({
                     <CustomText />
                 </Center>
                 <Effects />
-                <OrbitControls
-                    minPolarAngle={Math.PI / 2}
-                    maxPolarAngle={Math.PI / 2}
-                    minAzimuthAngle={-Math.PI / 3}
-                    maxAzimuthAngle={Math.PI / 3}
-                    // minPolarAngle={Math.PI / 4}
-                    // maxPolarAngle={-Math.PI / 4}
-                    enableZoom={false}
-                    enablePan={false}
-                />
+                {!isMobile && (
+                    <OrbitControls
+                        minPolarAngle={Math.PI / 2}
+                        maxPolarAngle={Math.PI / 2}
+                        minAzimuthAngle={-Math.PI / 3}
+                        maxAzimuthAngle={Math.PI / 3}
+                        // minPolarAngle={Math.PI / 4}
+                        // maxPolarAngle={-Math.PI / 4}
+                        enableZoom={false}
+                        enablePan={false}
+                    />
+                )}
                 {/* <OrbitControls /> */}
             </Canvas>
         </div>
     );
 }
-
-const getIsMobile = () => {
-    if (typeof window === "undefined") {
-        return false
-    }
-    return ((window.innerWidth <= 961));
-}
-
-const isMobile = getIsMobile()
 
 const CustomText = () => {
 
