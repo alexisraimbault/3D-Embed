@@ -68,7 +68,8 @@ export const ImageCrop = ({ imageName, setImageName }: {
             return;
         }
 
-        const userId = user?.id || undefined
+        // const userId = user?.id || undefined
+        const userId = 'temp'
         if (!userId) {
             return
         }
